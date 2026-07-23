@@ -4,8 +4,20 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import MenuOptions from "./MenuOptions";
 
+export type MenuOptionsType = {
+  label: string;
+  href: string;
+};
+
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+
+  const menuOptions: MenuOptionsType[] = [
+    { label: "Início", href: "/" },
+    { label: "Sobre", href: "/" },
+    { label: "Contato", href: "/" },
+    { label: "Configurações", href: "/config" },
+  ];
 
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -38,35 +50,16 @@ export default function Header() {
         <div className="hidden items-center gap-10 lg:flex">
           <nav>
             <ul className="flex items-center gap-8 font-medium text-gray-700">
-              <li>
-                <a href="#" className="transition hover:text-orange-500">
-                  Início
-                </a>
-              </li>
-
-              <li>
-                <a href="#" className="transition hover:text-orange-500">
-                  Cardápio
-                </a>
-              </li>
-
-              <li>
-                <a href="#" className="transition hover:text-orange-500">
-                  Promoções
-                </a>
-              </li>
-
-              <li>
-                <a href="#" className="transition hover:text-orange-500">
-                  Sobre
-                </a>
-              </li>
-
-              <li>
-                <a href="#" className="transition hover:text-orange-500">
-                  Contato
-                </a>
-              </li>
+              {menuOptions.map((opt, index) => (
+                <li key={index}>
+                  <a
+                    href={`${opt.href}`}
+                    className="transition hover:text-orange-500"
+                  >
+                    {opt.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </nav>
 
@@ -87,7 +80,7 @@ export default function Header() {
                 onClick={() => setIsOpen(false)}
                 className="fixed inset-0 z-40"
               />
-              <MenuOptions />
+              <MenuOptions options={menuOptions} />
             </>
           )}
         </div>
