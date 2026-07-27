@@ -6,16 +6,18 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 import { FaEllipsisV } from "react-icons/fa";
+import ProductMenuActions from "./ProductMenuActions";
 
 type PratoCardProps = {
-  prato: Product;
+  product: Product;
   handleEditClick: (mode: FormMode, product: Product) => void;
 };
 
-export default function PratoCard({ prato, handleEditClick }: PratoCardProps) {
+export default function PratoCard({ product, handleEditClick }: PratoCardProps) {
   const menuRef = useRef<HTMLUListElement>(null);
 
   const [open, setOpen] = useState(false);
+
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -33,7 +35,7 @@ export default function PratoCard({ prato, handleEditClick }: PratoCardProps) {
 
   return (
     <article
-      key={prato.id}
+      key={product.id}
       className="relative w-80 flex flex-col items-between justify-between overflow-hidden rounded-3xl bg-white shadow-lg transition hover:-translate-y-2 hover:shadow-2xl"
     >
       <div
@@ -44,37 +46,30 @@ export default function PratoCard({ prato, handleEditClick }: PratoCardProps) {
       </div>
 
       {open && (
-        <ul
-          ref={menuRef}
-          className="cursor-pointer absolute top-6 right-6 bg-white z-10 p-1 rounded-md"
-        >
-          <li
-            onClick={() => handleEditClick("editing", prato)}
-            className="hover:bg-gray-200 px-3 py-2 rounded-md"
-          >
-            Editar
-          </li>
-          <li className="hover:bg-gray-200 px-3 py-2 rounded-md">Excluir</li>
-        </ul>
+        <ProductMenuActions 
+          onDelete={() => {}}
+          menuRef={menuRef} 
+          onEdit={() => handleEditClick("editing", product)} />
       )}
 
       <div className="relative h-64 w-full">
         <Image
-          src={prato.imagem}
-          alt={prato.nome}
+          src={product.imagem}
+          alt={product.nome}
           fill
+          unoptimized
           className="object-cover"
         />
       </div>
 
       <div className="p-6">
-        <h3 className="text-2xl font-bold">{prato.nome}</h3>
+        <h3 className="text-2xl font-bold">{product.nome}</h3>
 
-        <p className="mt-3 text-gray-600">{prato.descricao}</p>
+        <p className="mt-3 text-gray-600">{product.descricao}</p>
 
         <div className="mt-6 flex items-center justify-between">
           <span className="text-2xl font-bold text-orange-500">
-            R$ {prato.preco.replace(".", ",")}
+            R$ {product.preco.replace(".", ",")}
           </span>
 
           <button className="rounded-lg bg-orange-500 px-4 py-2 text-white transition hover:bg-orange-600">

@@ -23,9 +23,10 @@ export default function Sobre(){
 
           <div className="relative h-[500px] overflow-hidden rounded-3xl">
             <Image
-              src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1000&q=80"
+              src="https://zvwxwcxquavhgoswsmim.supabase.co/storage/v1/object/public/store-platform-assets/f43c811e-4b41-4592-9aae-03f4f47fad8c/appearance/about-us-image.jpeg"
               alt="Ambiente do restaurante"
               fill
+              unoptimized
               className="object-cover"
             />
           </div>

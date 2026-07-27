@@ -33,10 +33,11 @@ export default function Header() {
         {/* Logo */}
         <div className="flex items-center gap-2">
           <Image
-            src="/imagens/header/logo.png"
+            src="https://zvwxwcxquavhgoswsmim.supabase.co/storage/v1/object/public/store-platform-assets/f43c811e-4b41-4592-9aae-03f4f47fad8c/appearance/logo.png"
             alt="Logo"
             width={60}
             height={60}
+            unoptimized
           />
 
           <div>

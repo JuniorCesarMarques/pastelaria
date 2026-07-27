@@ -4,10 +4,11 @@ export default function HomeHero() {
   return (
     <section className="relative h-[85vh]">
       <Image
-        src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=80"
+        src="https://zvwxwcxquavhgoswsmim.supabase.co/storage/v1/object/public/store-platform-assets/f43c811e-4b41-4592-9aae-03f4f47fad8c/appearance/banner.jpeg"
         alt="Restaurante"
         fill
         priority
+        unoptimized
         className="object-cover"
       />
 

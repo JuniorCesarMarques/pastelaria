@@ -81,7 +81,7 @@ export default function Home() {
               <PratoCard
                 key={prato.id}
                 handleEditClick={openFormModal}
-                prato={prato}
+                product={prato}
               />
             ))
           ) : (

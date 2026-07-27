@@ -2,8 +2,9 @@
 
 import { FormMode } from "@/app/page";
 import { Product } from "@/types/product";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import CloseButton from "./CLoseButton";
 
 type Props = {
   open: boolean;
@@ -20,11 +21,16 @@ export default function ProductFormModal({
 }: Props) {
   const { register, reset, watch } = useForm<Product>();
 
+  const [preview, setPreview] = useState<string>();
+
   const imageFile = watch("imagem")?.[0];
 
-  const preview = imageFile
+  useEffect(() => {
+    setPreview(imageFile
     ? URL.createObjectURL(imageFile as unknown as File)
-    : product?.imagem;
+    : product?.imagem)
+  }, [imageFile, product])
+
 
   useEffect(() => {
     reset({
@@ -57,14 +63,13 @@ export default function ProductFormModal({
         {/* Conteúdo */}
         <div className="flex-1 overflow-y-auto p-6">
           <div className="space-y-5">
-            <div>
-              <label className="mb-2 block font-medium">Foto</label>
+            <div className="relative">
+              {preview && <CloseButton  onClose={() => setPreview(undefined)} />}
 
-              <label className="flex h-44 cursor-pointer items-center justify-center rounded-xl border-2 border-dashed text-gray-500 transition hover:border-orange-500">
+              {!preview ? <label className="flex h-44 cursor-pointer items-center justify-center rounded-xl border-2 border-dashed text-gray-500 transition hover:border-orange-500">
                 Clique para enviar uma imagem
                 <input {...register("imagem")} type="file" className="hidden" />
-              </label>
-              {preview && <img src={preview} alt="" />}
+              </label> : <img src={preview} alt="" />}
             </div>
 
             <div>
