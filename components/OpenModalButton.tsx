@@ -15,7 +15,7 @@ export default function OpenModalButton({
       onClick={() => onOpen("creating")}
       className="rounded-lg bg-orange-500 px-5 py-3 text-white"
     >
-      + Novo prato
+      + Novo produto
     </button>
   );
 }

@@ -67,7 +67,7 @@ export default function Home() {
       {/* Pratos */}
       <section className="mx-auto max-w-7xl px-6 py-24">
         <div className="mb-14 text-center">
-          <h2 className="text-4xl font-bold">Pratos em Destaque</h2>
+          <h2 className="text-4xl font-bold">Produtos em Destaque</h2>
 
           <p className="mt-3 text-gray-500">
             Receitas preparadas diariamente com ingredientes frescos.

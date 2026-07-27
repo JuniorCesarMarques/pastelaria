@@ -21,7 +21,7 @@ export default function HomeHero() {
           </h1>
 
           <p className="mt-6 max-w-xl text-lg text-gray-200">
-            Pratos preparados com ingredientes selecionados, técnica e muito
+            Pastéis preparados com ingredientes selecionados, técnica e muito
             carinho para transformar cada refeição em uma experiência.
           </p>
 

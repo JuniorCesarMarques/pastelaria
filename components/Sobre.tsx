@@ -11,7 +11,7 @@ export default function Sobre(){
             </h2>
 
             <p className="mt-6 text-lg text-gray-600">
-              Nosso restaurante combina ingredientes selecionados, técnicas
+              Nossa pastelaria combina ingredientes selecionados, técnicas
               cuidadosas e um ambiente acolhedor para oferecer uma experiência
               gastronômica completa.
             </p>
