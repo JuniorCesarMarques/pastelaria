@@ -1,6 +1,5 @@
 "use client";
 
-import { FormMode } from "@/app/page";
 import { Product } from "@/types/product";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -10,7 +9,7 @@ import ProductMenuActions from "./ProductMenuActions";
 
 type PratoCardProps = {
   product: Product;
-  handleEditClick: (mode: FormMode, product: Product) => void;
+  handleEditClick: (product: Product) => void;
 };
 
 export default function PratoCard({ product, handleEditClick }: PratoCardProps) {
@@ -49,7 +48,7 @@ export default function PratoCard({ product, handleEditClick }: PratoCardProps) 
         <ProductMenuActions 
           onDelete={() => {}}
           menuRef={menuRef} 
-          onEdit={() => handleEditClick("editing", product)} />
+          onEdit={() => handleEditClick(product)} />
       )}
 
       <div className="relative h-64 w-full">

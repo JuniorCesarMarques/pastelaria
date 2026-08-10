@@ -10,11 +10,15 @@ import Sobre from "@/components/Sobre";
 import { Product } from "@/types/product";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { uploadImage } from "@/services/storage";
+import { deleteImage, uploadImage } from "@/services/storage";
+
+import { useParams } from "next/navigation";
 
 export type FormMode = "creating" | "editing";
 
 export default function Home() {
+  const { slug } = useParams();
+
   const [modalState, setModalState] = useState(false);
 
   const [products, setProducts] = useState<Product[]>([]);
@@ -22,37 +26,62 @@ export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   const onSubmit = async (data: ProductForm) => {
-
     if (selectedProduct) {
+      try {
+        const imgFromData =
+          data.imagem instanceof FileList ? data.imagem?.[0] : data.imagem;
 
-      const imgFile = data.imagem[0];
+        const imagem =
+          imgFromData instanceof File
+            ? await uploadImage(
+                imgFromData,
+                "store-platform-assets",
+                `${slug}/products`,
+              )
+            : imgFromData;
 
-      const imagem = imgFile
-        ? await uploadImage(
-            imgFile,
-            "store-platform-assets",
-            `f43c811e-4b41-4592-9aae-03f4f47fad8c/products`,
-          )
-        : null;
+        const isNewImage = !(typeof imagem === "string" || imagem === null)
 
-      const res = await fetch("/api/produtos", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+        const updatedProduct = {
           ...data,
           id: selectedProduct.id,
-          imagem: imagem?.publicUrl ?? selectedProduct.imagem,
-        }),
-      });
+          imagem:
+            isNewImage
+              ? imagem.publicUrl
+              : imagem,
+        };
 
-      const result = await res.json();
+        const res = await fetch("/api/produtos", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedProduct),
+        });
 
-      if (res.ok) {
+        const result = await res.json();
+
+        if (!res.ok) {
+          if (isNewImage) {
+            await deleteImage(imagem.publicUrl);
+          }
+
+          throw new Error(result.message);
+        }
+
+        if (isNewImage && selectedProduct.imagem) {
+          await deleteImage(selectedProduct.imagem);
+        }
+
+        setProducts((prev) =>
+          prev.map((p) => (p.id === selectedProduct.id ? updatedProduct : p)),
+        );
+
+        setSelectedProduct(null);
+        setModalState(false);
         toast.success(result.message);
-      } else {
-        toast.error(result.message);
+      } catch (err) {
+        toast.error(err as string);
       }
     } else {
       const res = await fetch(``);

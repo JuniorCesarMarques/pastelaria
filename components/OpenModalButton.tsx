@@ -4,7 +4,7 @@ import { FormMode } from "@/app/page";
 import { Product } from "@/types/product";
 
 type OpenModalButtonProps = {
-  onOpen: (mode: FormMode, product?: Product) => void;
+  onOpen: (product?: Product) => void;
 };
 
 export default function OpenModalButton({
@@ -12,7 +12,7 @@ export default function OpenModalButton({
 }: OpenModalButtonProps) {
   return (
     <button
-      onClick={() => onOpen("creating")}
+      onClick={() => onOpen()}
       className="rounded-lg bg-orange-500 px-5 py-3 text-white"
     >
       + Novo produto

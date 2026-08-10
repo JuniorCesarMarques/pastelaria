@@ -1,6 +1,5 @@
 "use client";
 
-import { FormMode } from "@/app/page";
 import { Product } from "@/types/product";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -9,37 +8,51 @@ import CloseButton from "./CLoseButton";
 type Props = {
   open: boolean;
   onClose: () => void;
-  formMode: FormMode;
   product: Product | null;
+  onSubmit: (product: ProductForm) => void;
+};
+
+export type ProductForm = Omit<Product, "imagem" | "id"> & {
+  imagem: string | FileList | null;
 };
 
 export default function ProductFormModal({
   open,
   onClose,
-  formMode,
   product,
+  onSubmit,
 }: Props) {
-  const { register, reset, watch } = useForm<Product>();
 
-  const [preview, setPreview] = useState<string>();
+  const { register, reset, setValue, watch, handleSubmit } =
+    useForm<ProductForm>();
 
-  const imageFile = watch("imagem")?.[0];
+  const [preview, setPreview] = useState<string | null>(null);
+
+  const imagemValue = watch("imagem");
+
+  console.log(imagemValue)
+
+  const imagem =
+    imagemValue instanceof FileList ? (imagemValue[0] ?? null) : imagemValue;
+
+  const removeImage = () => {
+    setValue("imagem", null);
+    setPreview(null);
+  };
 
   useEffect(() => {
-    setPreview(imageFile
-    ? URL.createObjectURL(imageFile as unknown as File)
-    : product?.imagem)
-  }, [imageFile, product])
-
+    setPreview(imagem instanceof File ? URL.createObjectURL(imagem) : imagem);
+  }, [imagem, product]);
 
   useEffect(() => {
     reset({
       nome: product?.nome ?? "",
       descricao: product?.descricao ?? "",
       disponivel: product?.disponivel ?? false,
+      imagem: product?.imagem ?? null,
       preco: product?.preco ?? "",
     });
-  }, [product, formMode, reset]);
+  }, [product, reset]);
 
   if (!open) return null;
 
@@ -49,7 +62,7 @@ export default function ProductFormModal({
         {/* Header */}
         <div className="flex items-center justify-between border-b p-6">
           <h2 className="text-2xl font-bold">
-            {formMode === "creating" ? "Novo Prato" : "Editar Prato"}
+            {product ? "Editar Prato" : "Novo Prato"}
           </h2>
 
           <button
@@ -64,12 +77,20 @@ export default function ProductFormModal({
         <div className="flex-1 overflow-y-auto p-6">
           <div className="space-y-5">
             <div className="relative">
-              {preview && <CloseButton  onClose={() => setPreview(undefined)} />}
+              {preview && <CloseButton onClose={removeImage} />}
 
-              {!preview ? <label className="flex h-44 cursor-pointer items-center justify-center rounded-xl border-2 border-dashed text-gray-500 transition hover:border-orange-500">
-                Clique para enviar uma imagem
-                <input {...register("imagem")} type="file" className="hidden" />
-              </label> : <img src={preview} alt="" />}
+              {!preview ? (
+                <label className="flex h-44 cursor-pointer items-center justify-center rounded-xl border-2 border-dashed text-gray-500 transition hover:border-orange-500">
+                  Clique para enviar uma imagem
+                  <input
+                    {...register("imagem")}
+                    type="file"
+                    className="hidden"
+                  />
+                </label>
+              ) : (
+                <img src={preview} alt="" />
+              )}
             </div>
 
             <div>
@@ -140,8 +161,11 @@ export default function ProductFormModal({
             Cancelar
           </button>
 
-          <button className="rounded-lg bg-orange-500 px-5 py-2 font-medium text-white transition hover:bg-orange-600">
-            {formMode === "creating" ? "Salvar prato" : "Editar Prato"}
+          <button
+            onClick={handleSubmit(onSubmit)}
+            className="rounded-lg bg-orange-500 px-5 py-2 font-medium text-white transition hover:bg-orange-600"
+          >
+            {product ? "Editar Prato" : "Salvar Prato"}
           </button>
         </div>
       </div>
