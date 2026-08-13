@@ -19,74 +19,74 @@ export type FormMode = "creating" | "editing";
 export default function Home() {
   const { slug } = useParams();
 
-  const [modalState, setModalState] = useState(false);
+  // const [modalState, setModalState] = useState(false);
 
-  const [products, setProducts] = useState<Product[]>([]);
+  // const [products, setProducts] = useState<Product[]>([]);
 
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  // const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  const onSubmit = async (data: ProductForm) => {
-    if (selectedProduct) {
-      try {
-        const imgFromData =
-          data.imagem instanceof FileList ? data.imagem?.[0] : data.imagem;
+  // const onSubmit = async (data: ProductForm) => {
+  //   if (selectedProduct) {
+  //     try {
+  //       const imgFromData =
+  //         data.imagem instanceof FileList ? data.imagem?.[0] : data.imagem;
 
-        const imagem =
-          imgFromData instanceof File
-            ? await uploadImage(
-                imgFromData,
-                "store-platform-assets",
-                `${slug}/products`,
-              )
-            : imgFromData;
+  //       const imagem =
+  //         imgFromData instanceof File
+  //           ? await uploadImage(
+  //               imgFromData,
+  //               "store-platform-assets",
+  //               `${slug}/products`,
+  //             )
+  //           : imgFromData;
 
-        const isNewImage = !(typeof imagem === "string" || imagem === null)
+  //       const isNewImage = !(typeof imagem === "string" || imagem === null)
 
-        const updatedProduct = {
-          ...data,
-          id: selectedProduct.id,
-          imagem:
-            isNewImage
-              ? imagem.publicUrl
-              : imagem,
-        };
+  //       const updatedProduct = {
+  //         ...data,
+  //         id: selectedProduct.id,
+  //         imagem:
+  //           isNewImage
+  //             ? imagem.publicUrl
+  //             : imagem,
+  //       };
 
-        const res = await fetch("/api/produtos", {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedProduct),
-        });
+  //       const res = await fetch("/api/produtos", {
+  //         method: "PUT",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify(updatedProduct),
+  //       });
 
-        const result = await res.json();
+  //       const result = await res.json();
 
-        if (!res.ok) {
-          if (isNewImage) {
-            await deleteImage(imagem.publicUrl);
-          }
+  //       if (!res.ok) {
+  //         if (isNewImage) {
+  //           await deleteImage(imagem.publicUrl);
+  //         }
 
-          throw new Error(result.message);
-        }
+  //         throw new Error(result.message);
+  //       }
 
-        if (isNewImage && selectedProduct.imagem) {
-          await deleteImage(selectedProduct.imagem);
-        }
+  //       if (isNewImage && selectedProduct.imagem) {
+  //         await deleteImage(selectedProduct.imagem);
+  //       }
 
-        setProducts((prev) =>
-          prev.map((p) => (p.id === selectedProduct.id ? updatedProduct : p)),
-        );
+  //       setProducts((prev) =>
+  //         prev.map((p) => (p.id === selectedProduct.id ? updatedProduct : p)),
+  //       );
 
-        setSelectedProduct(null);
-        setModalState(false);
-        toast.success(result.message);
-      } catch (err) {
-        toast.error(err as string);
-      }
-    } else {
-      const res = await fetch(``);
-    }
-  };
+  //       setSelectedProduct(null);
+  //       setModalState(false);
+  //       toast.success(result.message);
+  //     } catch (err) {
+  //       toast.error(err as string);
+  //     }
+  //   } else {
+  //     const res = await fetch(``);
+  //   }
+  // };
 
   // useEffect(() => {
   //   (async () => {
@@ -104,19 +104,19 @@ export default function Home() {
   //   })();
   // }, []);
 
-  const openFormModal = (product?: Product) => {
-    setSelectedProduct(product ?? null);
-    setModalState(true);
-  };
+  // const openFormModal = (product?: Product) => {
+  //   setSelectedProduct(product ?? null);
+  //   setModalState(true);
+  // };
 
-  const closeModal = () => {
-    setModalState(false);
-  };
+  // const closeModal = () => {
+  //   setModalState(false);
+  // };
 
   return (
     <main>
 
-      <HomeHero />
+      {/* <HomeHero />
 
       <OpenModalButton onOpen={openFormModal} />
 
@@ -157,7 +157,7 @@ export default function Home() {
       <Sobre />
 
 
-      <CTAComponent />
+      <CTAComponent /> */}
     </main>
   );
 }
