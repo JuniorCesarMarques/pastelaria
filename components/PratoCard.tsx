@@ -53,7 +53,7 @@ export default function PratoCard({ product, handleEditClick }: PratoCardProps) 
 
       <div className="relative h-64 w-full">
         <Image
-          src={product.imagem}
+          src={product.imagem ?? "/imagens/product-fallback.png"}
           alt={product.nome}
           fill
           unoptimized

@@ -32,13 +32,14 @@ export default function Header() {
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <Image
-            src="https://zvwxwcxquavhgoswsmim.supabase.co/storage/v1/object/public/store-platform-assets/f43c811e-4b41-4592-9aae-03f4f47fad8c/appearance/logo.png"
-            alt="Logo"
-            width={60}
-            height={60}
-            unoptimized
-          />
+            <Image
+              className="rounded-full"
+              src="/imagens/logo-fallback.png"
+              alt="Logo"
+              width={80}
+              height={80}
+              unoptimized
+            />
 
           <div>
             <h1 className="text-xl font-bold text-gray-900">Pastel Café</h1>

@@ -30,8 +30,6 @@ export default function ProductFormModal({
 
   const imagemValue = watch("imagem");
 
-  console.log(imagemValue)
-
   const imagem =
     imagemValue instanceof FileList ? (imagemValue[0] ?? null) : imagemValue;
 
@@ -143,7 +141,6 @@ export default function ProductFormModal({
               <input
                 id="disp"
                 type="checkbox"
-                checked={false}
                 {...register("disponivel")}
               />
 
