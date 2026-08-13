@@ -88,30 +88,30 @@ export default function Home() {
     }
   };
 
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const res = await fetch("/api/produtos");
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch("/api/produtos");
 
-  //       if (!res.ok) return;
+        if (!res.ok) return;
 
-  //       const products = await res.json();
+        const products = await res.json();
 
-  //       setProducts(products);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   })();
-  // }, []);
+        setProducts(products);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, []);
 
-  // const openFormModal = (product?: Product) => {
-  //   setSelectedProduct(product ?? null);
-  //   setModalState(true);
-  // };
+  const openFormModal = (product?: Product) => {
+    setSelectedProduct(product ?? null);
+    setModalState(true);
+  };
 
-  // const closeModal = () => {
-  //   setModalState(false);
-  // };
+  const closeModal = () => {
+    setModalState(false);
+  };
 
   return (
     <main>
