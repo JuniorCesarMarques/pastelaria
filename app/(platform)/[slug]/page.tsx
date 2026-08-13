@@ -116,7 +116,7 @@ export default function Home() {
   return (
     <main>
 
-      {/* <HomeHero />
+      <HomeHero />
 
       <OpenModalButton onOpen={openFormModal} />
 
@@ -157,7 +157,7 @@ export default function Home() {
       <Sobre />
 
 
-      <CTAComponent /> */}
+      <CTAComponent />
     </main>
   );
 }
