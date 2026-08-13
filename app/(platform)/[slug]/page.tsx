@@ -19,11 +19,11 @@ export type FormMode = "creating" | "editing";
 export default function Home() {
   const { slug } = useParams();
 
-  // const [modalState, setModalState] = useState(false);
+  const [modalState, setModalState] = useState(false);
 
-  // const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
 
-  // const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   // const onSubmit = async (data: ProductForm) => {
   //   if (selectedProduct) {
