@@ -1,6 +1,5 @@
 "use client"
 
-import { FormMode } from "@/app/page";
 import { Product } from "@/types/product";
 
 type OpenModalButtonProps = {
