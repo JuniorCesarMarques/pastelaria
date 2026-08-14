@@ -1,4 +1,4 @@
-import { deleteProducts, getAllProducts, insertProduct, updateProduct } from "@/repository/produtos.repository";
+import { deleteProducts, getAllProducts, insertProduct, updateProduct } from "@/repositories/produtos.repository";
 
 export async function GET() {
     
