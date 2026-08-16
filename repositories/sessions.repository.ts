@@ -26,3 +26,15 @@ export async function createSession({
 
   return result.rows[0];
 }
+
+export async function findSessionByTokenHash(tokenHash: string){
+
+  const result = await pool.query("SELECT * FROM sessions WHERE token_hash = $1", [tokenHash]);
+
+  return result.rows[0];
+}
+
+export async function removeSessionById(sessionId: string){
+
+  return await pool.query("DELETE FROM sessions WHERE id = $1", [sessionId]);
+}

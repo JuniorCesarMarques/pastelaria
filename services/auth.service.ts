@@ -1,8 +1,13 @@
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 
+// login
 import { findUserByEmail } from "@/repositories/user.repository";
 import { createSession } from "@/repositories/sessions.repository";
+
+// session
+import { cookies } from "next/headers";
+import { findSessionByTokenHash } from "@/repositories/sessions.repository";
 
 
 export async function login(email: string, password: string) {
@@ -46,4 +51,30 @@ const expiresAt = new Date();
       email: user.email,
     },
   };
+}
+
+export async function getSession() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("session")?.value;
+
+  if (!token) {
+    return null;
+  }
+
+  const tokenHash = crypto
+    .createHash("sha256")
+    .update(token)
+    .digest("hex");
+
+  const session = await findSessionByTokenHash(tokenHash);
+
+  if (!session) {
+    return null;
+  }
+
+  if (session.expiresAt < new Date()) {
+    return null;
+  }
+
+  return session;
 }

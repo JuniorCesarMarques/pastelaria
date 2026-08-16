@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
@@ -14,6 +15,8 @@ export default function LoginPage() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<LoginForm>();
+
+  const router = useRouter();
 
   const onSubmit = async (data: LoginForm) => {
     try {
@@ -34,7 +37,7 @@ export default function LoginPage() {
 
       toast.success("Logado com sucesso");
 
-      console.log(result);
+      router.push("/dashboard");
     } catch (err) {
         toast.error("Algo deu errado.")
     }
