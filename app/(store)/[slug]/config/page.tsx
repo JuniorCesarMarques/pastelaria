@@ -7,6 +7,7 @@ const tabs = [
   "Pagamentos",
   "Entrega",
   "Usuários",
+  "Aparência"
 ];
 
 export default function ConfiguracoesPage() {

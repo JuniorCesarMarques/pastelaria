@@ -6,11 +6,19 @@ import {
 } from "@/repositories/produtos.repository";
 import { getSession } from "@/services/auth.service";
 
-export async function GET() {
+export async function GET(
+  req: Request,
+  { params }: { params: Promise<{ slug: string }> },
+) {
   try {
-    const pratos = await getAllProducts();
 
-    return Response.json(pratos, { status: 200 });
+    const { slug } = await params;
+
+    const produtos = await getAllProducts(slug);
+
+    console.log(produtos)
+
+    return Response.json(produtos, { status: 200 });
   } catch (err) {
     console.log("Erro interno do servidor:", err);
 
@@ -89,7 +97,7 @@ export async function DELETE(req: Request) {
     if (!session) {
       return Response.json({ error: "Não autenticado" }, { status: 401 });
     }
-    
+
     const { ids } = await req.json();
 
     const { rowCount } = await deleteProducts(ids);

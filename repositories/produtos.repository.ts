@@ -1,8 +1,17 @@
 import { pool } from "@/lib/db";
 import { Product } from "@/types/product";
 
-export const getAllProducts = async () => {
-  const res = await pool.query("SELECT * FROM produtos;");
+export const getAllProducts = async (slug: string) => {
+  const res = await pool.query(`
+    SELECT
+     B.*
+    FROM
+      lojas AS A
+    INNER JOIN
+      produtos AS B
+    ON
+      A.id = B.loja_id
+    WHERE A.slug = $1;`, [slug]);
 
   return res.rows;
 };

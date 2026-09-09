@@ -1,7 +1,7 @@
 "use client";
 
 import CTAComponent from "@/components/CTAComponent";
-import HomeHero from "@/components/HomeHero";
+import HomeHero from "@/components/Banner";
 import ProductFormModal, { ProductForm } from "@/components/ProductFormModal";
 import OpenModalButton from "@/components/OpenModalButton";
 import PratoCard from "@/components/PratoCard";
@@ -40,15 +40,12 @@ export default function Home() {
               )
             : imgFromData;
 
-        const isNewImage = !(typeof imagem === "string" || imagem === null)
+        const isNewImage = !(typeof imagem === "string" || imagem === null);
 
         const updatedProduct = {
           ...data,
           id: selectedProduct.id,
-          imagem:
-            isNewImage
-              ? imagem.publicUrl
-              : imagem,
+          imagem: isNewImage ? imagem.publicUrl : imagem,
         };
 
         const res = await fetch("/api/produtos", {

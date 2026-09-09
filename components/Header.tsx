@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import MenuOptions from "./MenuOptions";
+import { useParams } from "next/navigation";
 
 export type MenuOptionsType = {
   label: string;
@@ -11,12 +12,13 @@ export type MenuOptionsType = {
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const { slug } = useParams();
 
   const menuOptions: MenuOptionsType[] = [
     { label: "Início", href: "/" },
     { label: "Sobre", href: "/" },
     { label: "Contato", href: "/" },
-    { label: "Configurações", href: "/config" },
+    { label: "Configurações", href: `/${slug}/config` },
   ];
 
   useEffect(() => {
@@ -27,8 +29,9 @@ export default function Header() {
     });
   }, []);
 
+
   return (
-    <header className="w-full border-b bg-white">
+    <header className="w-full bg-white fixed top-0 z-10">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
         {/* Logo */}
         <div className="flex items-center gap-2">
